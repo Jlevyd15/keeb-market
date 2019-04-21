@@ -1,78 +1,91 @@
-var express = require('express')
-var app = express()
-var Router = express.Router()
-var path = require('path')
-// var favicon = require('serve-favicon')
-var logger = require('morgan')
-var cookieParser = require('cookie-parser')
-var bodyParser = require('body-parser')
-// var mongoose = require('mongoose')
+// //index controller
+// // const express = require('express')
+// // const app = express()
+// // const nodemailer = require('nodemailer')
+// const request = require('request')
+// require('dotenv').config()
 
-require('dotenv').config()
+// const ApiResponse = require('../helper/ApiResponse')
 
-//set the port to run on one that is specified or 5000
-app.set('port', (process.env.PORT || 5000))
+// // const Scraper = require('../helper/Scraper')
+// // let contactFormSubmitReady = false
 
-//set connection string to local db
-//var localMongoUri = 'mongodb://127.0.0.1/Services'
-// mongoose.connect(process.env.MONGODB_URI)
-// var db = mongoose.connection
-// db.on('error', function() {
-// 	throw new Error('unable to connect to database')
-// })
+// // const isProd = process.env.NODE_ENV === 'production'
 
-// uncomment after placing favicon in /public
-// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
-app.use(logger('dev'))
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(cookieParser())
+// let oAuthToken
 
-// set the publicly accessible path for assets
-app.use(express.static(path.join(__dirname, 'public')))
-app.set('view engine', 'html')
-// catch 404 and forward to error handler
-// app.use(function(req, res, next) {
-// 	var err = new Error('Not Found')
-// 	err.status = 404
-// 	next(err)
-// })
+// const getRedditApiToken = callback => {
+// 	// if we already have a token just use that one
+// 	if (oAuthToken) {
+// 		console.log('token is ready')
+// 		return callback({ error: undefined, data: oAuthToken })
+// 	}
 
-// error handlers
+// 	const options = {
+// 		method: 'POST',
+// 		url: 'https://www.reddit.com/api/v1/access_token',
+// 		'headers': {
+// 			'User-Agent': 'web:keeb-mart:1.0.0 (by /u/jeremypsu15)',
+// 			'Content-Type': 'application/x-www-form-urlencoded'
+// 		},
+// 		auth: {
+// 			user: process.env.CLIENT_ID,
+// 			pass: process.env.CLIENT_SECRET,
+// 			sendImmediately: false
+// 		},
+// 		form: {
+// 			grant_type: 'client_credentials',
+// 			device_id: process.env.DEVICE_ID
+// 		}
+// 	}
 
-// development error handler
-// will print stacktrace
-if (process.env.NODE_ENV === 'development') {
-	app.use(function(err, req, res, next) {
-		res.status(err.status || 500)
-		res.render('error', {
-			message: err.message,
-			error: err
-		})
-	})
-}
+// 	request(options, function (error, response, body) {
+// 		body = JSON.parse(body)
+// 		// console.log('body with token is ', body)
+// 		if (!body.access_token) return callback({ error, data: undefined })
+// 		console.log('token is', oAuthToken)
+// 		oAuthToken = body.access_token
+// 		return callback({ error, data: body.access_token })
+// 	})
+// }
 
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-	res.status(err.status || 500)
-	res.render('error', {
-		message: err.message,
-		error: {}
-	})
-})
+// exports.getRedditData = (req, res) => {
+// 	const resultWithToken = ({ data, error }) => {
+// 		// now request some data form the Reddit API with the token
 
-/*module.exports = app*/
-//require models file
-// require('./models/Services')
-//require routes file for all routing
-require('./routes')(app, Router)
+// 		// TODO - don't hardcode this URL, get it from the user
+// 		const options = {
+// 			method: 'GET',
+// 			url: 'https://oauth.reddit.com/api/v1/user/jeremypsu15/trophies',
+// 			'headers': {
+// 				'Authorization': `bearer ${data}`,
+// 				'User-Agent': 'web:keeb-mart:1.0.0 (by /u/jeremypsu15)'
+// 			}
+// 		}
+// 		console.log('requesting reddit data token is', data)
 
-//start the app and listen on the specified port
-app.listen(app.get('port'), function(){
-	if(process.env.NODE_ENV === 'development') {
-		console.log('(Dev) We\'re running on port', app.get('port'))
-	} else {
-		console.log('We\'re running on port', app.get('port'))
-	}
-})
+// 		request(options, function (error, response, body) {
+// 			body = JSON.parse(body)
+// 			if (error) return res.send(500)
+// 			res.json({ error: undefined, data: body })
+// 		})
+// 	}
+// 	getRedditApiToken(resultWithToken)
+// }
+
+// // since the public directory set as "public" in index, do we still need this route?
+// //get the index page when user navigates to '/' route
+// exports.getIndex = (req, res, next) => {
+// 	res.sendFile('index.html', err => {
+// 		if (err) {
+// 			console.error('error ', err)
+// 			next(err)
+// 		}
+// 	})
+// }
+
+// //Handle 404 - not found
+// exports.notFound = function (req, res) {
+// 	res.status(404)
+// 	res.json(ApiResponse.buildRes({ error: 'Not Found', code: 404 }))
+// }
