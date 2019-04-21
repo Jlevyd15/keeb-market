@@ -20,6 +20,7 @@ module.exports = function(app, Router){
 	//landing page
 	app.get('/', indexController.getIndex)
 
+	app.get('/reddit', indexController.getRedditData)
 	// // list page
 	// Router.get('/list', indexController.findAllServiceData)
 	// app.use(subdomain('api', Router))
