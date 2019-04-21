@@ -9,6 +9,7 @@ class App extends Component {
 	}
 	componentDidMount() {
 		fetch('/.netlify/functions/hello')
+		// fetch('http://localhost:34567/hello')
 			.then(response => {
 				console.log(response.body)
 				return response.json()
