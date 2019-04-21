@@ -11,12 +11,13 @@ class App extends Component {
 		fetch('/.netlify/functions/hello')
 			.then(response => {
 				console.log(response.body)
-				return response.json()
+				// return response.json()
+				return response.text()
 				// return response ? response.json() : 'nothing'
 			})
 			.then(json => {
 				console.log(json)
-				this.setState({ loading: false, msg: json.msg })
+				this.setState({ loading: false, msg: json })
 			})
 		// fetch('https://randomuser.me/api/?results=10')
 		// .then(res => res.json())
