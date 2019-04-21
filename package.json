@@ -89,12 +89,12 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/Jlevyd15/keeb-market.git"
+		"url": "git+https://github.com/Jlevyd15/keeb-mart.git"
 	},
 	"author": "Jeremy Levy",
 	"license": "ISC",
 	"bugs": {
-		"url": "https://github.com/Jlevyd15/keeb-market/issues"
+		"url": "https://github.com/Jlevyd15/keeb-mart/issues"
 	},
-	"homepage": "https://github.com/Jlevyd15/keeb-market#readme"
+	"homepage": "https://github.com/Jlevyd15/keeb-mart#readme"
 }
