@@ -8,38 +8,25 @@ class App extends Component {
 		this.state = { loading: true, msg: undefined }
 	}
 	componentDidMount() {
-		fetch('/.netlify/functions/hello')
-			.then(response => {
-				console.log(response.body)
-				// return response.json()
-				return response.text()
-				// return response ? response.json() : 'nothing'
-			})
+		fetch('/.netlify/functions/reddit')
+			.then(response => response.text())
 			.then(json => {
-				console.log(json)
-				this.setState({ loading: false, msg: json })
+				this.setState({ loading: false, msg: JSON.parse(json).data })
 			})
-		// fetch('https://randomuser.me/api/?results=10')
-		// .then(res => res.json())
-		// .then(json => console.log('results!', json))
 	}
   render() {
     return this.state.loading ? 'Still loading...' : (
       <div className="App">
         <header className="App-header">
-					<h1>{this.state.msg}</h1>
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+					{this.state.msg.data.children.map(item => (
+							<>
+								<details>
+									<summary><h2>{item.data.title}</h2></summary>
+									<p>{item.data.selftext}</p>
+								</details>
+							</>
+						)
+					)}
         </header>
       </div>
     );

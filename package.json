@@ -3,20 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "dotenv": "^7.0.0",
     "http-proxy-middleware": "^0.19.1",
+    "node-fetch": "^2.3.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "2.1.8"
-	},
-	"devDependencies": {
-		"netlify-lambda": "^1.4.5"
-	},
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.0",
+    "netlify-lambda": "^1.4.5"
+  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "concurrently \"react-scripts start\" \"netlify-lambda serve src/lambdas\"",
+    "client": "react-scripts start",
+    "build": "netlify-lambda build src/lambdas && react-scripts build",
     "test": "react-scripts test",
-		"eject": "react-scripts eject",
-		"lambda": "netlify-lambda serve src/lambdas"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
