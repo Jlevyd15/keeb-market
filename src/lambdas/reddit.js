@@ -39,10 +39,11 @@ export const getRedditApiToken = async () => {
 	.catch(error => console.error('Error:', error))
 }
 
-const fetchRedditAPI = async (token) => {
+const fetchRedditAPI = async (event, token) => {
 	// now request some data form the Reddit API with the token
 	// const URL = 'https://oauth.reddit.com/api/v1/user/jeremypsu15/trophies'
-	const URL = 'https://oauth.reddit.com/r/mechmarket/search?q="/^[.*$/g"&restrict_sr=true&sort="new"'
+	const nextPage = event.queryStringParameters.after || event.queryStringParameters.before
+	const URL = `https://oauth.reddit.com/r/mechmarket/search?q="/^\[.*$/g"&restrict_sr=true&sort=new&count=5&limit=5&after=${nextPage}`
 	// TODO - don't hardcode this URL, get it from the user
 	const options = {
 		method: 'GET',
@@ -61,7 +62,7 @@ const fetchRedditAPI = async (token) => {
 
 export async function handler(event, context) {
 	const token = await getRedditApiToken()
-	const data = await fetchRedditAPI(token)
+	const data = await fetchRedditAPI(event, token)
 
 	return {
 		statusCode: 200,
