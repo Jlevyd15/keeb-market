@@ -7,6 +7,7 @@
     "encoding": "^0.1.12",
     "http-proxy-middleware": "^0.19.1",
     "markdown": "^0.5.0",
+    "node-craigslist": "^2.0.0",
     "node-fetch": "^2.3.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -18,7 +19,7 @@
     "netlify-lambda": "^1.4.5"
   },
   "scripts": {
-    "start": "concurrently \"react-scripts start\" \"netlify-lambda serve src/lambdas\"",
+    "start": "NODE_ENV=development concurrently \"react-scripts start\" \"netlify-lambda serve src/lambdas\"",
     "client": "react-scripts start",
     "build": "netlify-lambda build src/lambdas && react-scripts build",
     "test": "react-scripts test",
